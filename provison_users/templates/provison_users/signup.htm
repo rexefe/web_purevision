@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block tittle %}Rex Home {% endblock %}
+
+{% block main %}
+<main class="d-flex justify-content-center">
+  <div class="userSignIn m-3 flex-column justify-content-center col-sm-5">
+    <h2>Sign up Form</h2>
+    <form method="post">
+      {% csrf_token %}
+      {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+      <p style="color: red">{{ error }}</p>
+      {% endfor %}
+      </p>
+      {% endfor %}
+      <button class="float-right" type="submit">Sign up</button>
+    </form>
+  </div>
+</main>
+
+{% endblock %}

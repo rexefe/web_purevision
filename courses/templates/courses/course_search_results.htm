@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block tittle %}Search Results {% endblock %}
+
+{% block main %} 
+<main>
+    <section id="search-section" class="search-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <h1 class="insidetop-head">Search Results</h1>
+                    </div>      
+                </div>
+            </div>
+        
+        </section>
+
+    <section id="search-section" class="search-section section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 search-section-padding">
+              <form action="{% url 'search_results' %}" method="get" class="search-area">
+                <div class="form-group no-margin">
+                    <div class="col-md-3 no-padding">
+                        <input type="text" class="form-control" id="header-auto-complete-input-2" name="q"
+                            placeholder="Search for your Course" value="">
+                        <div id="header-auto-complete-results-2" style="display: none;"></div>
+                    </div>
+                    <div class="col-md-2 no-padding">
+                        <select class="form-control selectbox" name="category_id">
+                            <option value="-1"> Category </option>
+                            
+                            {% for category in categories %}
+                                 <option value="{{ category.id }}"> {{category.name}} </option>
+                        {% endfor %}     
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 no-padding">
+                        <select class="form-control selectbox" name="city_id">
+                            <option value="-1"> City </option>
+
+                            {% for city in cities %}
+                                <option value="{{ city.id }}"> {{city.city}} </option>
+                            {% endfor %}    
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 no-padding">
+                        <select class="form-control selectbox" name="lang_id">
+                            <option value="-1">Language </option>
+
+                             {% for language in languages %}
+                                <option value="{{ language.id }}"> {{language.name}} </option>
+                             {% endfor %}       
+                        </select>
+                    </div>
+
+                    <div class="col-md-1 no-padding">
+                        <select class="form-control selectbox" name="month">
+                            <option value="-1">Month </option>
+                            <option value="1">January </option>
+                            <option value="2">February </option>
+                            <option value="3">March </option>
+                            <option value="4">April </option>
+                            <option value="5">May </option>
+                            <option value="6">June </option>
+                            <option value="7">July </option>
+                            <option value="8">August  </option>
+                            <option value="9">September </option>
+                            <option value="10">October </option>
+                            <option value="11">November </option>
+                            <option value="12">December </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-1 no-padding">
+                        <select class="form-control selectbox" name="year">
+                            <option value="-1"> Year </option>
+                            <option value="2020"> 2020 </option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 no-padding">
+                        <input type="submit" class="btn btn-block btn-success" id="search-btn" value="Search">
+                    </div>
+                </div>
+            </form>
+            </div>             
+            </div>
+        </div>
+    
+    </section>
+    
+
+	
+        
+        
+
+
+
+
+<!-- Search Results -->
+<section id="searchresult-section" class="searchresult-section section-color-gray section-padding">
+<div class="container">
+<div class="row">
+
+<div class="col-md-12 search-list-fullwrap">
+    <div class="col-md-12 no-padding">
+        <div class="col-md-6 no-padding">
+        
+        </div>
+        <div class="col-md-6 no-padding">
+        <div class="btn list-btns standard-view ">Standard View</div>
+        <!-- <div class="btn list-btns list-view">List View</div> -->
+        </div>
+        </div>
+</div>
+
+<div class="clearfix m-b-12"></div>
+<div class="clearfix m-b-12"></div>
+
+
+<section id="searchresult-section" class="searchresult-section section-color-gray section-padding"></section>
+
+{% for course in course_list %}
+
+<div class="col-md-12 box-list-two m-b-12">
+    <div class="col-md-2 no-padding search-listview-img">
+    <a href="{{ course.get_absolute_url }}">
+    <img src="https://www.meirc.com/assets/images/course-image/course/access-control-physical-security-management-courses.jpg" class="img-responsive" alt="">
+    </a>
+    
+    </div>
+    <div class="col-md-8 search-results-listview-contents">
+    <h4 class="no-margin m-b-6"><a href="{{ course.get_absolute_url }}">{{ course.title }}</a></h4>
+    {{ course.overview  | slice:": 100"}}...<div class="clearfix"></div>
+
+    <div class="row search-results-section-list-view">
+    <div class="col-md-3">
+    <strong><i class="fa fa-calendar calender-color" aria-hidden="true"></i> Date</strong>
+    </div>
+    <div class="col-md-2">
+    <strong><i class="fa fa-map-marker map-color" aria-hidden="true"></i> City</strong>
+    </div>
+    <div class="col-md-2">
+    <strong><i class="fa fa-flag-checkered flag-color" aria-hidden="true"></i> Language</strong>
+    </div>
+    <div class="col-md-4">
+    <strong><i class="fa fa-map-marker map-color" aria-hidden="true"></i> Venue</strong>
+    </div>
+    </div>
+    {% for item in course.variants.all %}
+        <div class="row search-results-section-list-view">
+        <div class="col-md-3">
+        {{ item.start_date}}</div>
+        <div class="col-md-2">
+        {{ item.location}} </div>
+        <div class="col-md-2">
+        {{ item.language}} </div>
+        <div class="col-md-4">
+       Some Venue </div>
+        </div>
+    {% endfor %}
+    
+    </div>
+    <!---->
+    <div class="col-md-2 standard-searchresult-view-box-padding-2">
+
+    <div class="row search-results-mobile-row">
+    <!--
+    <div class="col-md-3 standard-searchresult-view-box-padding search-results-list-view-mobile-btn-width">
+    <form action="https://www.meirc.com/register" method="post" class="no-padding m-b-0">
+    <input type="hidden" name="course_id" value="549">
+    <button type="submit" class="btn btn-info btn-sm btn-small btn-block" id="searresultscourses-btn2">
+    View Course </button>
+    </form>
+    </div>
+    -->
+    <div class="col-md-3 standard-searchresult-view-box-padding ">
+    </div>
+    <div class="col-md-3 standard-searchresult-view-box-padding search-results-list-view-mobile-btn-width">
+        <a href="{{ course.get_absolute_url }}" class="btn btn-success btn-sm btn-small btn-block" >View Course</a>
+    </div>
+    </div>
+    </div>
+    
+    </div>
+
+    {% endfor %}
+    
+
+    <div class="col-md-12"> <ul class="pagination d-flex mt-5 justify-content-center" id="search_page_pagination"><li class="active"><a href="javascript:void(0)">1</a></li><li><a href="https://www.meirc.com/webinars/9" data-ci-pagination-page="2">2</a></li><li><a href="https://www.meirc.com/webinars/18" data-ci-pagination-page="3">3</a></li><li><a href="https://www.meirc.com/webinars/99" data-ci-pagination-page="12">Last</a></li></ul> </div>
+</div>
+</div>
+</section>
+
+</main>
+
+{% endblock %}
+

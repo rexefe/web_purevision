@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block tittle %}Rex Home {% endblock %}
+
+{% block main %} 
+<main>
+
+<!-- 
+-->
+
+<h1> Course Page <h1>
+<h3>Title: {{ course.title }}</h3>
+<h3>{{ course.code }}</h3>
+
+<h4>Label: </h4>    		<p> {{ course.label }}</p>
+<h4>Category: </h4> 		<p>{{ course.category }}</p>
+<h4>Overview: </h4> 		<p>{{ course.overview }}</p>
+<h4>Course Type: </h4>  	<p>{{ course.course_type }}</p>
+<h4>Date: </h4>         	<p>{{ course.date }}</p>
+<h4>Outline: </h4>      	<p>{{ course.outline }}</p>
+<h4>Duration (Days):</h4>	<p> {{ course.duration }}</p>
+
+
+
+	{%  if course.variants.all %}
+		{% for item in course.variants.all %}
+		<ul>
+			
+			<H4> Course Varient </H4>
+				<li>Location: {{ item.location }}</li>
+				<li>Language: {{ item.language }}</li>
+				<li>Fees: {{ item.fees }}</li>
+				<li>Start Date: {{ item.start_date }}</li>
+				<li>End Date: {{ item.end_date }}</li>
+				<li>Instructor: {{ item.instructor }}</li> <!-- If ANY -->
+
+			
+				<form action="/course/register" method="get" class="search-area">
+							<input type="hidden" name="q" value="{{item.id}}" />
+							<button type="submit" class="btn btn-info btn-sm btn-small btn pull-right mobile-btn-width" id="searresultscourses-btn2">Register Now </button>
+				</form>
+
+		</ul>
+		{% endfor %}
+
+	{% else %}
+		<H3>Course does not have extra infomations or variants</H3>
+	{% endif %}
+
+{% endblock %}
