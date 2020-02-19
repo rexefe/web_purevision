@@ -1,22 +1,31 @@
 from django.shortcuts import render
 from courses.models import Course, Category, Location, Language
+from aurthor.models import Authur
 #main pages
 
 #my changes
+def testcat(request):
+	return render(request, 'category.htm', {})
 
 def home(request):
-    #courses = Course.objects.filter(date__year='2020')
-    courses = Course.objects.all()[:12]
-    category = Category.objects.all()
-    cities = Location.objects.all()
-    language = Language.objects.all()
-    context = {'courses': courses,
-    		   'categories': category,
-    		   'cities': cities,
-    		   'languages': language, }
+	#courses = Course.objects.filter(date__year='2020')
+	special_courses = Course.objects.filter(event='Special')[:6]
+	upcoming_courses = Course.objects.filter(event='Upcoming')[:6]
+	category = Category.objects.all()
+	cities = Location.objects.all()
+	language = Language.objects.all()
+	aurthor = Authur.objects.all()
+
+	print(aurthor)
+
+	context = {'special_courses': special_courses,
+				'upcoming_courses': upcoming_courses,
+				'categories': category,
+				'cities': cities,
+				 'languages': language, 
+				 'aurthor':aurthor}
     
-    print('I was here very well')
-    return render(request, 'home.htm', context)
+	return render(request, 'home.htm', context)
 
 #Services
 def service_blended_learning(request, *args, **kwargs):

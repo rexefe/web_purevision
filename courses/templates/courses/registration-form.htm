@@ -1,133 +1,293 @@
-
 {% extends 'base.html' %}
 {% load static %}
 {% block tittle %}Rex Home {% endblock %}
 
 {% block main %} 
-
-<!-- at this point, it will write an object to MyCouses -->
 <main>
 
-	<section id="registerpage-section" class="registerpage-section section-color-white section-padding border-gray insidehead-padding-10">
-		<div class="container">
-		<div class="row">
-		<div class="col-md-12">
-		<h1 class="first-head">Register</h1>
-		</div>
-		</div>
-		</div>
-		</section>
 
+
+
+<script type="84edf76b9c3dea873220205d-text/javascript">
+    $('#course_register').parsley().destroy();
+    $('#course_register').parsley();
+    function change_category(val) {
+
+        $.ajax({
+                type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                url: 'https://www.meirc.com/register/change_category', // the url where we want to POST
+                data: {
+                    category_id: val
+                }, // our data object
+                dataType: 'json', // what type of data do we expect back from the server
+                encode: true
+            })
+
+            // using the done promise callback
+            .done(function (data) {
+
+                if (!data.success) {
+                    alert('No Courses available for this category');
+                    $('#course_select').html('<option value="">Course Name</option>' + data.course_option);
+                    $('#location_and_date').html('');
+                    $('#location_and_date').html(data.location_and_date);
+
+                } else {
+
+                    $('#course_select').html('<option value="">Course Name</option>' + data.course_option);
+                    $('#location_and_date').html('');
+                    $('#location_and_date').html(data.location_and_date);
+                }
+            })
+            // using the fail promise callback
+            .fail(function (data) {
+                alert("hi fail");
+                // show any errors
+                // best to remove for production
+                console.log(data);
+            });
+    }
+
+   function change_course(obj) {
+var course_name = $(obj).find("option:selected").data("name");
+var val = obj.value;
+        $.ajax({
+                type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                url: 'https://www.meirc.com/register/change_course', // the url where we want to POST
+                data: {
+                    course_id: val
+                }, // our data object
+                dataType: 'json', // what type of data do we expect back from the server
+                encode: true
+            })
+            // using the done promise callback
+            .done(function (data) {
+
+                if (!data.success) {
+                    //alert(data.success);
+                    if(data.invalid=='invalid'){
+                        alert('You are trying to put an Invalid Entry');
+                        $('#location_and_date').html('');
+                    }else{
+                        $('#location_and_date').html('');
+                        $('#location_and_date').html(data.no_sessions);
+                    }
+
+
+                } else {
+                    //alert("success");
+                   // alert(data.success);
+                    $('#location_and_date').html('');
+                    $('#location_and_date').html(data.location_and_date);
+                    $('#course_fees').html(data.fees);
+                    $('#is_plus_register').val(data.is_plus_register);
+                    $('#fees_amount').val(data.fees_amount);
+                    $('#courseName_hidden').val(course_name);
+
+
+                }
+            })
+            // using the fail promise callback
+            .fail(function (data) {
+                alert("hi fail");
+                // show any errors
+                // best to remove for production
+                console.log(data);
+            });
+    }
+    function check_nominees() {
+        var email=$('#email_nom').val();
+
+        $.ajax({
+                type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                url: 'https://www.meirc.com/register/check_nominees', // the url where we want to POST
+                data: {
+                    email: email
+                }, // our data object
+                dataType: 'json', // what type of data do we expect back from the server
+                encode: true
+            })
+            // using the done promise callback
+            .done(function (data) {
+
+                if (!data.success) {
+                    if(data.invalid=='invalid'){
+                        alert('You are trying to put an Invalid Entry');
+                    }else{
+                       alert("You are a new Nominator.. Welcome..");
+                    }
+
+                } else {
+                    var name =data.nominee_details[0].name;
+                    var ret = name.split(" ");
+                    var first_name = ret[0];
+                    var last_name = ret[1];
+                    $('#first_name_nom').val(first_name);
+                    $('#last_name_nom').val(last_name);
+                    $('#job_title_nom').val(data.nominee_details[0].job_title);
+                    $('#phone_nom').val(data.nominee_details[0].phone);
+                    $('#company_nom').val(data.nominee_details[0].company);
+                    $('#address').val(data.nominee_details[0].address);
+                    $('#pob').val(data.nominee_details[0].pob);
+                    $('#city_nom').val(data.nominee_details[0].city);
+                    $('#country_nom').val(data.nominee_details[0].country);
+
+
+
+                }
+            })
+            // using the fail promise callback
+            .fail(function (data) {
+                //alert("hi fail");
+                // show any errors
+                // best to remove for production
+                console.log(data);
+            });
+    }
+    function add_participant() {
+        var num_of_participant=$('#number_of_participants').val();
+        var new_participant_num=parseInt(num_of_participant)+1;
+        $('#participants').append('<div id="participant_info_'+new_participant_num+'"><div class="col-md-12 register-coursetext">Participant '+new_participant_num+'</div><div class="col-md-4 form-group"><input type="text" class="form-control" id="fn_participant'+new_participant_num+'" name="fn_participant'+new_participant_num+'"   placeholder="First Name*" value="" data-parsley-required-message="Required field" ></div><div class="col-md-4 form-group"><input type="text" class="form-control" id="ln_participant'+new_participant_num+'" name="ln_participant'+new_participant_num+'"  placeholder="Last Name*" value="" data-parsley-required-message="Required field" ></div><div class="col-md-4 form-group"><input type="text" class="form-control" id="jt_participant'+new_participant_num+'" name="jt_participant'+new_participant_num+'"  placeholder="Job Title*" value="" data-parsley-required-message="Required field" ></div><div class="col-md-4 form-group"><input type="email" class="form-control" id="email_participant'+new_participant_num+'" name="email_participant'+new_participant_num+'"  placeholder="Email*" value="" data-parsley-required-message="Required field" ></div></div>');
+        $('#number_of_participants').val(new_participant_num);
+
+        if($('#number_of_participants').val()> 1){
+            $('#remove_participant').show();
+            $('#fn_participant'+new_participant_num).attr('data-parsley-required', 'true');
+            $('#ln_participant'+new_participant_num).attr('data-parsley-required', 'true');
+            $('#jt_participant'+new_participant_num).attr('data-parsley-required', 'true');
+            $('#email_participant'+new_participant_num).attr('data-parsley-required', 'true');
+        }
+    }
+     function delete_participant() {
+        var num_of_participant=$('#number_of_participants').val();
+
+        var new_participant_num=parseInt(num_of_participant)-1;
+
+        $('#participant_info_'+num_of_participant).remove();
+        $('#number_of_participants').val(new_participant_num);
+        if($('#number_of_participants').val()==1) {
+            $('#remove_participant').hide();
+        }
+
+    }
+</script>
+
+<section id="registerpage-section" class="registerpage-section section-color-white section-padding border-gray insidehead-padding-10">
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<h1 class="first-head">Register</h1>
+</div>
+</div>
+</div>
+</section>
 <section id="insidehead-section" class="insidehead-section insidehead-padding">
 <div class="container">
-
+<div class="">
 	
-
-
-<form name="course_register" id="course_register" method="post" action="https://www.meirc.com/register/register_action" onsubmit="if (!window.__cfRLUnblockHandlers) return false; return validateform(this.submited);">
+<form name="course_register" id="course_register" method="post" action="https://www.meirc.com/register/register_action" onsubmit="if (!window.__cfRLUnblockHandlers) return false; return validateform(this.submited);" data-cf-modified-84edf76b9c3dea873220205d-="">
 
 <input type="hidden" class="form-control" id="lead_source" name="lead_source" value="Register">
-<input type="hidden" name="oid" value="00D58000000b8Gz">
-<input type="hidden" name="retURL" value="">
+<input type=hidden name="oid" value="00D58000000b8Gz">
+<input type=hidden name="retURL" value="">
 
 <div class="col-md-9">
 <div class="col-md-12 register-coursename">
 Step 1: Course Details </div>
-<div class="clearfix"></div>
+ <div class="clearfix"></div>
 <div class="search-inner-box box-list-two">
 <div class="row">
 <div class="col-md-12 form-group">
 <div class="m-b-10"><strong>Category</strong></div>
 <select class="form-control selectbox" name="category" id="category" onchange="if (!window.__cfRLUnblockHandlers) return false; change_category(this.value);" required="" data-parsley-required-message="Required field">
-		<option value="{{ course.course_id.category.id}}">{{ course.course_id.category}}</option>
+	<option value="{{ course.course_id.category.id}}">{{ course.course_id.category}}</option>
 
 <!--
-		 {% for category in categories %}
-                             <option value="{{ category.id }}"> {{category.name}} </option>
-          {% endfor %}  
-          -->   
+	 {% for category in categories %}
+						 <option value="{{ category.id }}"> {{category.name}} </option>
+	  {% endfor %}  
+	  -->   
 </select>
 </div>
 <div class="col-md-12 form-group">
+	<div class="m-b-10"><strong>Course Name</strong></div>
+	<input id="courseName_hidden" name="00N580000098m5a" type="hidden" value="HR Business Partner: Roles, Responsibilities and Competencies">
+	<select class="form-control selectbox" name="course_name" id="course_select" onchange="if (!window.__cfRLUnblockHandlers) return false; change_course(this);" required="" data-parsley-required-message="Required field">
+	<option value="0">{{ course.course_id }}</option>
 
-<div class="m-b-10"><strong>Course Name</strong></div>
-<input id="courseName_hidden" name="00N580000098m5a" type="hidden" value="HR Business Partner: Roles, Responsibilities and Competencies">
-<select class="form-control selectbox" name="course_name" id="course_select" onchange="if (!window.__cfRLUnblockHandlers) return false; change_course(this);" required="" data-parsley-required-message="Required field">
-<option value="0">{{ course.course_id }}</option>
-
-</select>
+	</select>
 </div>
 <div class="col-md-12">
-<div class="m-b-10 m-t-10"><strong>Available Dates</strong></div>
-<div id="no-more-tables">
-<table class="col-md-12 table-bordered table-striped table-condensed cf" id="location_and_date" style="margin-bottom:6px;">
-<thead class="cf">
-<tr>
-<th></th>
-<th>Start Date</th>
-<th>End Date</th>
-<th>City</th>
-<th>Language</th>
-<th>Venue</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="register-table-option-head">
-<input type="radio" name="register_session" value="2898" required="" data-year="2020" data-parsley-required-message="Please choose your date" data-parsley-errors-container="#location_custom_validation" checked="">
-</td>
-
-
-<td data-title="Start Date">
-{{course.start_date }} </td>
-<td data-title="End Date">
-{{course.end_date }} </td>
-<td data-title="City">
-{{course.location }} </td>
-<td data-title="Language">
-{{course.language }} </td>
-<td data-title="Venue">
-{{course.venue }} </td>
-</tr>
-
-
-<tr>
-<td class="register-table-option-head">
-<input type="radio" name="register_session" value="2913" required="" data-year="2020" data-parsley-required-message="Please choose your date" data-parsley-errors-container="#location_custom_validation">
-</td>
-
-
-{% for item in course.course_id.variants.all %}
-		{% if item.id == course.id %}
-			<p>This is The Category that i will not print</p>
-		{% else %}
-				<td data-title="Start Date">
-				{{item.start_date}} </td>
-				<td data-title="End Date">
-				{{item.end_date}} </td>
-				<td data-title="City">
-				{{item.location }} </td>
-				<td data-title="Language">
-				{{item.language }} </td>
-				<td data-title="Venue">
-				{{item.venue }} </td>
-				</tr>
-		{% endif %}
-
-{% endfor %}
-
-
-
-</tbody>
-</table>
-</div>
-<div class="cleartfix"></div>
-<div id="location_custom_validation"></div>
-</div>
+	<div class="m-b-10 m-t-10"><strong>Available Dates</strong></div>
+	<div id="no-more-tables">
+	<table class="col-md-12 table-bordered table-striped table-condensed cf" id="location_and_date" style="margin-bottom:6px;">
+	<thead class="cf">
+	<tr>
+	<th></th>
+	<th>Start Date</th>
+	<th>End Date</th>
+	<th>City</th>
+	<th>Language</th>
+	<th>Venue</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+	<td class="register-table-option-head">
+	<input type="radio" name="register_session" value="2898" required="" data-year="2020" data-parsley-required-message="Please choose your date" data-parsley-errors-container="#location_custom_validation" checked="">
+	</td>
+	
+	
+	<td data-title="Start Date">
+	{{course.start_date }} </td>
+	<td data-title="End Date">
+	{{course.end_date }} </td>
+	<td data-title="City">
+	{{course.location }} </td>
+	<td data-title="Language">
+	{{course.language }} </td>
+	<td data-title="Venue">
+	{{course.venue }} </td>
+	</tr>
+	
+	
+	<tr>
+	
+	
+	
+	{% for item in course.course_id.variants.all %}
+			{% if item.id == course.id %}
+				<p></p>
+			{% else %}
+			<td class="register-table-option-head">
+				<input type="radio" name="register_session" value="2913" required="" data-year="2020" data-parsley-required-message="Please choose your date" data-parsley-errors-container="#location_custom_validation">
+				</td>
+					<td data-title="Start Date">
+					{{item.start_date}} </td>
+					<td data-title="End Date">
+					{{item.end_date}} </td>
+					<td data-title="City">
+					{{item.location }} </td>
+					<td data-title="Language">
+					{{item.language }} </td>
+					<td data-title="Venue">
+					{{item.venue }} </td>
+					</tr>
+			{% endif %}
+	
+	{% endfor %}
+	
+	
+	
+	</tbody>
+	</table>
+	</div>
+	<div class="cleartfix"></div>
+	<div id="location_custom_validation"></div>
+	</div>
 <div class="clearfix"></div>
 </div>
 </div>
-
 <div class="col-md-12 register-coursename">
 Step 2: Choose Registration Type </div>
 <div class="clearfix"></div>
@@ -137,7 +297,7 @@ Step 2: Choose Registration Type </div>
 <label class="radio-inline">
 <input type="radio" name="register_type" value="nominator">
 <div class="nominator-btn">Company Paid</div>
- </label>
+</label>
 <label class="radio-inline">
 <input type="radio" name="register_type" value="self-nomination">
 <div class="sleftnomination-btn">Self Paid</div>
@@ -146,9 +306,9 @@ Step 2: Choose Registration Type </div>
 <div class="clearfix"></div>
 </div>
 </div>
-<input type="hidden" name="fees_amount" id="fees_amount" value="4800">
-<input type="hidden" name="" id="" value="0">
-<div class="" style="margin-bottom: 0px; display: none;">
+<input type="hidden" name="fees_amount" id="fees_amount" value="5100" />
+<input type="hidden" name="is_plus_register" id="is_plus_register" value="0" />
+<div class="step3-nominator" style="margin-bottom: 0px;" id="nomination">
 <div class="col-md-12 register-coursename">
 Step 3: Personal Details </div>
 <div class="clearfix"></div>
@@ -156,16 +316,16 @@ Step 3: Personal Details </div>
 <div class="row">
 <div class="col-md-8 form-group">
 <div class="input-group">
-<input data-parsley-type="email" class="form-control" id="email_nom" name="email" data-parsley-required-message="Required field" data-parsley-type-message="Invalid Email Address" placeholder="Email*" value="" data-parsley-errors-container="#custom_nom_validation" onblur="if (!window.__cfRLUnblockHandlers) return false; check_nominees()">
-<div class="btn input-group-addon" onclick="if (!window.__cfRLUnblockHandlers) return false; check_nominees()"><div class="glyphicon glyphicon-search"></div></div>
+<input data-parsley-type="email" class="form-control" id="email_nom" name="email" data-parsley-required-message="Required field" data-parsley-type-message="Invalid Email Address" placeholder="Email*" value="" data-parsley-errors-container="#custom_nom_validation" onblur="if (!window.__cfRLUnblockHandlers) return false; check_nominees()" data-cf-modified-84edf76b9c3dea873220205d-="">
+<div class="btn input-group-addon" onclick="if (!window.__cfRLUnblockHandlers) return false; check_nominees()" data-cf-modified-84edf76b9c3dea873220205d-=""><div class="glyphicon glyphicon-search"></div></div>
 </div>
 <div class="cleartfix"></div>
 <div class="f-sz-13"><b>Returning Clients:</b> Enter your email address and click the Search button</div>
 <div class="f-sz-13"><b>New Clients:</b> Fill in all required fields</div>
 <div id="custom_nom_validation"></div>
 </div>
-<div class="col-md-12"><br></div>
-<input type="hidden" name="number_of_participants" id="number_of_participants" value="1">
+<div class="col-md-12"><br /></div>
+<input type="hidden" name="number_of_participants" id="number_of_participants" value="1" />
 <div class="cleartfix"></div>
 <div class="col-md-4 form-group">
 <input type="text" class="form-control" id="first_name_nom" name="first_name" placeholder="First Name*" value="" data-parsley-required-message="Required field">
@@ -183,7 +343,7 @@ Step 3: Personal Details </div>
 <div class="col-md-4 form-group">
 <input type="text" class="form-control" id="company_nom" name="company" placeholder="Company*" value="" data-parsley-required-message="Required field">
 </div>
- <div class="col-md-4 form-group">
+<div class="col-md-4 form-group">
 <input type="text" class="form-control" id="address" name="address" placeholder="Address" value="">
 </div>
 <div class="clearfix"></div>
@@ -216,7 +376,7 @@ Antarctica </option>
 Antigua and Barbuda </option>
 <option value="Argentina">
 Argentina </option>
-<option value="Armenia">
+ <option value="Armenia">
 Armenia </option>
 <option value="Aruba">
 Aruba </option>
@@ -225,7 +385,7 @@ Australia </option>
 <option value="Austria">
 Austria </option>
 <option value="Azerbaijan">
- Azerbaijan </option>
+Azerbaijan </option>
 <option value="Bahamas">
 Bahamas </option>
 <option value="Bahrain">
@@ -295,7 +455,7 @@ Comoros </option>
 <option value="Congo">
 Congo </option>
 <option value="Congo, the Democratic Republic of the">
-Congo, the Democratic Republic of the </option>
+Congo, the Democratic Republic of the  </option>
 <option value="Cook Islands">
 Cook Islands </option>
 <option value="Costa Rica">
@@ -303,7 +463,7 @@ Costa Rica </option>
 <option value="Cote d'Ivoire">
 Cote d'Ivoire </option>
 <option value="Croatia (Hrvatska)">
-Croatia (Hrvatska)  </option>
+Croatia (Hrvatska) </option>
 <option value="Cyprus">
 Cyprus </option>
 <option value="Czech Republic">
@@ -415,7 +575,7 @@ Kazakhstan </option>
 <option value="Kenya">
 Kenya </option>
 <option value="Kiribati">
-Kiribati </option>
+ Kiribati </option>
 <option value="Korea, Democratic People's Republic of">
 Korea, Democratic People's Republic of </option>
 <option value="Korea, Republic of">
@@ -423,7 +583,7 @@ Korea, Republic of </option>
 <option value="Kuwait">
 Kuwait </option>
 <option value="Kyrgyzstan">
- Kyrgyzstan </option>
+Kyrgyzstan </option>
 <option value="Lao, People's Democratic Republic">
 Lao, People's Democratic Republic </option>
 <option value="Latvia">
@@ -453,7 +613,7 @@ Malaysia </option>
 <option value="Maldives">
 Maldives </option>
 <option value="Mali">
-Mali </option>
+Mali  </option>
 <option value="Malta">
 Malta </option>
 <option value="Marshall Islands">
@@ -462,7 +622,7 @@ Marshall Islands </option>
 Martinique </option>
 <option value="Mauritania">
 Mauritania </option>
- <option value="Mauritius">
+<option value="Mauritius">
 Mauritius </option>
 <option value="Mayotte">
 Mayotte </option>
@@ -493,7 +653,7 @@ Netherlands </option>
 <option value="Netherlands Antilles">
 Netherlands Antilles </option>
 <option value="New Caledonia">
-New Caledonia </option>
+ New Caledonia </option>
 <option value="New Zealand">
 New Zealand </option>
 <option value="Nicaragua">
@@ -533,7 +693,7 @@ Pitcairn </option>
 <option value="Poland">
 Poland </option>
 <option value="Portugal">
-Portugal </option>
+Portugal  </option>
 <option value="Puerto Rico">
 Puerto Rico </option>
 <option value="Qatar">
@@ -542,7 +702,7 @@ Qatar </option>
 Reunion </option>
 <option value="Romania">
 Romania </option>
- <option value="Russian Federation">
+<option value="Russian Federation">
 Russian Federation </option>
 <option value="Rwanda">
 Rwanda </option>
@@ -572,7 +732,7 @@ Singapore </option>
 Slovakia (Slovak Republic) </option>
 <option value="Slovenia">
 Slovenia </option>
-<option value="Solomon Islands">
+ <option value="Solomon Islands">
 Solomon Islands </option>
 <option value="Somalia">
 Somalia </option>
@@ -580,7 +740,7 @@ Somalia </option>
 South Africa </option>
 <option value="South Georgia and the South Sandwich Islands">
 South Georgia and the South Sandwich Islands </option>
- <option value="South Sudan">
+<option value="South Sudan">
 South Sudan </option>
 <option value="Spain">
 Spain </option>
@@ -610,7 +770,7 @@ Tanzania, United Republic of </option>
 Thailand </option>
 <option value="Togo">
 Togo </option>
-<option value="Tokelau">
+ <option value="Tokelau">
 Tokelau </option>
 <option value="Tonga">
 Tonga </option>
@@ -619,7 +779,7 @@ Trinidad and Tobago </option>
 <option value="Tunisia">
 Tunisia </option>
 <option value="Turkey">
- Turkey </option>
+Turkey </option>
 <option value="Turkmenistan">
 Turkmenistan </option>
 <option value="Turks and Caicos Islands">
@@ -649,7 +809,7 @@ Vietnam </option>
 <option value="Virgin Islands (British)">
 Virgin Islands (British) </option>
 <option value="Virgin Islands (U.S.)">
-Virgin Islands (U.S.) </option>
+ Virgin Islands (U.S.) </option>
 <option value="Wallis and Futuna Islands">
 Wallis and Futuna Islands </option>
 <option value="Western Sahara">
@@ -689,10 +849,10 @@ Participant 1
 </div>
 </div>
 <div class="col-md-12">
-<button type="button" class="btn addmore-participents btn btn-warning btn-sm btn-small" onclick="if (!window.__cfRLUnblockHandlers) return false; add_participant();">
+<button type="button" class="btn addmore-participents btn btn-warning btn-sm btn-small" onclick="if (!window.__cfRLUnblockHandlers) return false; add_participant();" data-cf-modified-84edf76b9c3dea873220205d-="">
 Add Participant <i class="fa fa-plus-square" aria-hidden="true"></i>
 </button>
-<button type="button" class="btn addmore-participents btn btn-warning btn-sm btn-small" onclick="if (!window.__cfRLUnblockHandlers) return false; delete_participant();" id="remove_participant" style="display:none;">
+<button type="button" class="btn addmore-participents btn btn-warning btn-sm btn-small" onclick="if (!window.__cfRLUnblockHandlers) return false; delete_participant();" id="remove_participant" style="display:none;" data-cf-modified-84edf76b9c3dea873220205d-="">
 Remove Participant <i class="fa fa-minus-square" aria-hidden="true"></i>
 </button>
 </div>
@@ -700,7 +860,7 @@ Remove Participant <i class="fa fa-minus-square" aria-hidden="true"></i>
 </div>
 </div>
 </div>
-<div class="step3-self-nomination" style="margin-bottom: 0px; display: none;" id="self-nomination">
+<div class="step3-self-nomination" style="margin-bottom: 0px;" id="self-nomination">
 <div class="col-md-12 register-coursename">
 Step 3: Personal Details </div>
 <div class="clearfix"></div>
@@ -748,7 +908,7 @@ Afghanistan </option>
 <option value="Albania">
 Albania </option>
 <option value="Algeria">
- Algeria </option>
+Algeria </option>
 <option value="American Samoa">
 American Samoa </option>
 <option value="Andorra">
@@ -782,13 +942,13 @@ Bangladesh </option>
 <option value="Barbados">
 Barbados </option>
 <option value="Belarus">
-Belarus </option>
+ Belarus </option>
 <option value="Belgium">
 Belgium </option>
 <option value="Belize">
 Belize </option>
 <option value="Benin">
-Benin  </option>
+Benin </option>
 <option value="Bermuda">
 Bermuda </option>
 <option value="Bhutan">
@@ -906,7 +1066,7 @@ Georgia </option>
 <option value="Germany">
 Germany </option>
 <option value="Ghana">
- Ghana </option>
+Ghana </option>
 <option value="Gibraltar">
 Gibraltar </option>
 <option value="Greece">
@@ -946,13 +1106,13 @@ India </option>
 <option value="Indonesia">
 Indonesia </option>
 <option value="Iraq">
- Iraq </option>
+Iraq </option>
 <option value="Ireland">
 Ireland </option>
 <option value="Italy">
 Italy </option>
 <option value="Jamaica">
-Jamaica </option>
+Jamaica  </option>
 <option value="Japan">
 Japan </option>
 <option value="Jordan">
@@ -991,7 +1151,7 @@ Luxembourg </option>
 Macau </option>
 <option value="Macedonia, The Former Yugoslav Republic of">
 Macedonia, The Former Yugoslav Republic of </option>
-<option value="Madagascar">
+ <option value="Madagascar">
 Madagascar </option>
 <option value="Malawi">
 Malawi </option>
@@ -1031,7 +1191,7 @@ Morocco </option>
 Mozambique </option>
 <option value="Namibia">
 Namibia </option>
-<option value="Nauru">
+ <option value="Nauru">
 Nauru </option>
 <option value="Nepal">
 Nepal </option>
@@ -1065,13 +1225,13 @@ Pakistan </option>
 Palau </option>
 <option value="Palestine">
 Palestine </option>
- <option value="Panama">
+<option value="Panama">
 Panama </option>
 <option value="Papua New Guinea">
 Papua New Guinea </option>
 <option value="Paraguay">
 Paraguay </option>
-<option value="Peru">
+ <option value="Peru">
 Peru </option>
 <option value="Philippines">
 Philippines </option>
@@ -1142,7 +1302,7 @@ Suriname </option>
 <option value="Svalbard and Jan Mayen Islands">
 Svalbard and Jan Mayen Islands </option>
 <option value="Swaziland">
-Swaziland  </option>
+Swaziland </option>
 <option value="Sweden">
 Sweden </option>
 <option value="Switzerland">
@@ -1181,13 +1341,13 @@ United Arab Emirates </option>
 United Kingdom </option>
 <option value="United States">
 United States </option>
- <option value="United States Minor Outlying Islands">
+<option value="United States Minor Outlying Islands">
 United States Minor Outlying Islands </option>
 <option value="Uruguay">
 Uruguay </option>
 <option value="Uzbekistan">
 Uzbekistan </option>
-<option value="Vanuatu">
+ <option value="Vanuatu">
 Vanuatu </option>
 <option value="Venezuela">
 Venezuela </option>
@@ -1215,7 +1375,7 @@ Zimbabwe </option>
 </div>
 </div>
 </div>
-<div class="search-inner-box m-b-1 search-main-buttons box-list-two" style="overflow: visible; display: none;">
+<div class="search-inner-box m-b-1 search-main-buttons box-list-two" style="overflow: visible;">
 <div class="col-md-12 no-padding">
 <div class="col-md-6 no-padding">
 <div class="col-md-12 no-padding"></div>
@@ -1224,24 +1384,27 @@ Zimbabwe </option>
 <label style="font-weight:400;" class="toolstoggle">
 <input type="checkbox" value="1" name="terms" id="terms" data-parsley-required-message="Required field">
 I accept the
- <a href="https://www.meirc.com/policies-and-discounts" alt="" target="_blank">
+<a href="https://www.meirc.com/policies-and-discounts" alt="" target="_blank">
 <u>Terms and Conditions</u>
 </a> *
 </label>
 </div>
 </div>
-<br>
-<br>
+<br />
+<br />
 <div class="clearfix"></div>
 <div class="col-md-6 no-padding">
 <div class="col-md-12  no-padding">
-<div id="register_captcha"><div style="width: 304px; height: 78px;"><div><iframe src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6Lc5bgcUAAAAANXQm_4L7KsD_Dgo2nnPFOStFbwn&amp;co=aHR0cHM6Ly93d3cubWVpcmMuY29tOjQ0Mw..&amp;hl=en&amp;v=vJuUWXolyYJx1oqUVmpPuryQ&amp;theme=light&amp;size=normal&amp;cb=dhd788u1fsw3" role="presentation" name="a-kvdl7mpjefu" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" width="304" height="78" frameborder="0"></iframe></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div></div>
+<div id="register_captcha"></div>
 <div class="parsley-errors-list filled parsley-required" id="captcha_error" style="display:none;">Please verify that you are not a robot.</div>
 </div>
 </div>
 <div class="col-md-6 no-padding">
 <div class="clearfix m-t-22"></div>
-<button type="submit" name="register" onclick="if (!window.__cfRLUnblockHandlers) return false; this.form.submited=this.value;" id="register" class="btn btn-info pull-right" value="other">Register and Pay Later</button>
+<button type="submit" name="register" onclick="if (!window.__cfRLUnblockHandlers) return false; this.form.submited=this.value;" id="register" class="btn btn-info pull-right" value="other" data-cf-modified-84edf76b9c3dea873220205d-="">Register and Pay Later</button>
+<div class="clearfix m-b-12"></div>
+<div class="clearfix"></div>
+<p class="text-right"> <em>5% VAT will be applicable to all courses held in the UAE and Saudi Arabia</em></p>
 </div>
 <div class="clearfix"></div>
 </div>
@@ -1255,30 +1418,360 @@ I accept the
                     }
                 </style>
 </form>
+<div class="col-md-3">
+<div class="col-md-12 register-coursename">
+Fees: US$ </div>
+<div class="clearfix"></div>
+<div id="course_fees">
+<ul class="list-group m-b-002 no-padding">
+
+<li class="list-group-item"> Per participant - 2020 <span class="pull-right"><strong>USD 5,200</strong></span></li>
+<li class="list-group-item"><strong>Fees + VAT </strong> as applicable</li>
+<li class="list-group-item"> <a href="https://www.meirc.com/policies-and-discounts" target="_blank" class="btn btn-block btn-danger" id="searresultscourses-btn1" style="font-size: 12px;">
+Discount Plans & Cancellations Policy</a>
+<div style="font-size: 13px; margin-top: 6px;">(including coffee breaks and a buffet lunch daily)</div>
+</li>
+</ul>
+</div>
+
+</div>
+</div>
 </div>
 </section>
-</main>
+<script type="84edf76b9c3dea873220205d-text/javascript">
+    var sitekey = '6Lc5bgcUAAAAANXQm_4L7KsD_Dgo2nnPFOStFbwn';
+          var verifyCallback = function(response) {
+            //alert(response);
+          };
+          var registerWidget;
+
+          var onloadCallback = function() {
+            // Renders the HTML element with id 'example1' as a reCAPTCHA widget.
+            // The id of the reCAPTCHA widget is assigned to 'widgetId1'.
+            registerWidget = grecaptcha.render(document.getElementById('register_captcha'), {
+              'sitekey' : sitekey,
+              'theme' : 'light'
+            });
+          };
+
+          function validateform(val){
+
+            var captcha_response = grecaptcha.getResponse();
+            if(captcha_response.length == 0)
+            {
+              $('#captcha_error').show();
+              return false;
+            }
+            else
+            {
+              // Captcha is Passed
+              $('#captcha_error').hide();
+              var year=$('input[name="register_session"]:checked').data("year");
+              if (year>=2020 && val=='cc') {
+               // alert('The Pay Online facility is currently unavailable for 2018 courses.  Please click Register and Pay Later to complete your registration.');
+                //return false;
+                    var is_vat = confirm('A security code has been sent to your email to continue the payment process.');
+                    if(is_vat== true){
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+
+              }
 
 
 
+            }
+          }
+        </script>
+<style>
+    .tools {
+        position: absolute;
+        top: -30px;
+        background: #3285f4;
+        padding: 4px 4px;
+        font-size: 12px;
+        border-radius: 3px;
+        display: none;
+        color: #ffffff;
+        line-height: 14px;
+    }
+</style>
 
-<!--
-
-{% for item in course.course_id.variants.all %}
-		{% if item.id == course.id %}
-			<p>This is The Category that i will not print</p>
-		{% else %}
-			<p>{{item}}</p>
-			<p>{{item.start_date}}</p>
-			<p>{{item.location}}</p>
-			<p>{{item.language}}</p>
-			<p>{{item.venue}}</p>
-
-		{% endif %}
-
-{% endfor %}
-
+<!-- <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://www.meirc.com/assets/js/jquery.min.js" type="84edf76b9c3dea873220205d-text/javascript"></script>
 -->
+<!-- <script src="https://www.meirc.com/assets/js/bootstrap.min.js" type="84edf76b9c3dea873220205d-text/javascript"></script>
+-->
+<!-- <script src="https://www.meirc.com/assets/js/all.js" type="84edf76b9c3dea873220205d-text/javascript"></script>
+-->
+
+<!-- <script src="https://www.meirc.com/assets/js/jquery.lazy.min.js" type="84edf76b9c3dea873220205d-text/javascript"></script>
+-->
+<!--
+<script src="https://www.meirc.com/assets/js/plus-inhouse.js" type="84edf76b9c3dea873220205d-text/javascript"></script>
+-->
+<!--
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer type="84edf76b9c3dea873220205d-text/javascript">
+   </script>
+-->
+<!--
+<script src="https://www.meirc.com/assets/js/parsley.min.js" type="84edf76b9c3dea873220205d-text/javascript"></script>
+-->
+<!--
+<script src="https://www.meirc.com/assets/js/menu.js" type="84edf76b9c3dea873220205d-text/javascript"></script>
+-->
+<!--
+<script src="https://www.meirc.com/assets/js/owl-carousel/owl.carousel.js" type="84edf76b9c3dea873220205d-text/javascript"></script>
+
+<script src="https://www.meirc.com/assets/js/sticky-kit.js" type="84edf76b9c3dea873220205d-text/javascript"></script>
+<script src="https://www.meirc.com/assets/js/jquery.sticky.js" type="84edf76b9c3dea873220205d-text/javascript"></script>
+
+<script src="https://www.meirc.com/assets/js/slick.min.js" type="84edf76b9c3dea873220205d-text/javascript"></script>
+<script type="84edf76b9c3dea873220205d-text/javascript">$slider_config = false;</script>
+<script src="https://www.meirc.com/assets/js/slider.js" type="84edf76b9c3dea873220205d-text/javascript"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" type="84edf76b9c3dea873220205d-text/javascript"></script>
+-->
+
+
+
+
+
+<script type="84edf76b9c3dea873220205d-text/javascript">     
+
+
+    $(".step3-nominator,.step3-self-nomination,.search-main-buttons").hide();
+    /*Register page button click*/
+    $('input[type="radio"]').click(function () {
+        if ($(this).attr("value") == "nominator") {
+            $(".step3-self-nomination").hide();
+            $(".step3-nominator,.search-main-buttons").show();
+            $('#self-nomination *').prop('disabled',true);
+            $('#nomination *').prop('disabled',false);
+
+
+            $('#course_register').parsley().destroy();
+             var num_of_participant=$('#number_of_participants').val();
+
+            //set required attribute on input to true
+            $('#email_nom').attr('data-parsley-required', 'true');
+            $('#first_name_nom').attr('data-parsley-required', 'true');
+            $('#last_name_nom').attr('data-parsley-required', 'true');
+            $('#job_title_nom').attr('data-parsley-required', 'true');
+            $('#phone_nom').attr('data-parsley-required', 'true');
+            $('#company_nom').attr('data-parsley-required', 'true');
+            $('#city_nom').attr('data-parsley-required', 'true');
+            $('#pobox_nom').attr('data-parsley-required', 'true');
+            $('#country_nom').attr('data-parsley-required', 'true');
+            for(var i=1;i<=num_of_participant;i++){
+                $('#fn_participant'+i).attr('data-parsley-required', 'true');
+                $('#ln_participant'+i).attr('data-parsley-required', 'true');
+                $('#jt_participant'+i).attr('data-parsley-required', 'true');
+                $('#email_participant'+i).attr('data-parsley-required', 'true');
+            }
+
+            $('#email_self').attr('data-parsley-required', 'false');
+            $('#first_name_self').attr('data-parsley-required', 'false');
+            $('#last_name_self').attr('data-parsley-required', 'false');
+            $('#job_title_self').attr('data-parsley-required', 'false');
+            $('#phone_self').attr('data-parsley-required', 'false');
+            $('#company_self').attr('data-parsley-required', 'false');
+            $('#city_self').attr('data-parsley-required', 'false');
+            $('#pobox_self').attr('data-parsley-required', 'false');
+            $('#country_self').attr('data-parsley-required', 'false');
+            $('#terms').attr('data-parsley-required', 'true');
+
+            //reinitialize parsley
+            $('#course_register').parsley();
+
+        } else if ($(this).attr("value") == "self-nomination") {
+            var num_of_participant=$('#number_of_participants').val();
+
+            $(".step3-nominator").hide();
+            $(".step3-self-nomination,.search-main-buttons").show();
+
+            $('#self-nomination *').prop('disabled',false);
+            $('#nomination *').prop('disabled',true);
+            $('#course_register').parsley().destroy();
+
+            $('#email_nom').attr('data-parsley-required', 'false');
+            $('#first_name_nom').attr('data-parsley-required', 'false');
+            $('#last_name_nom').attr('data-parsley-required', 'false');
+            $('#job_title_nom').attr('data-parsley-required', 'false');
+            $('#phone_nom').attr('data-parsley-required', 'false');
+            $('#company_nom').attr('data-parsley-required', 'false');
+            $('#city_nom').attr('data-parsley-required', 'false');
+            $('#pobox_nom').attr('data-parsley-required', 'false');
+            $('#country_nom').attr('data-parsley-required', 'false');
+            for(var i=1;i<=num_of_participant;i++){
+                $('#fn_participant'+i).attr('data-parsley-required', 'false');
+                $('#ln_participant'+i).attr('data-parsley-required', 'false');
+                $('#jt_participant'+i).attr('data-parsley-required', 'false');
+                $('#email_participant'+i).attr('data-parsley-required', 'false');
+            }
+
+            //set required attribute on input to true
+            $('#email_self').attr('data-parsley-required', 'true');
+            $('#first_name_self').attr('data-parsley-required', 'true');
+            $('#last_name_self').attr('data-parsley-required', 'true');
+            $('#job_title_self').attr('data-parsley-required', 'true');
+            $('#phone_self').attr('data-parsley-required', 'true');
+            $('#company_self').attr('data-parsley-required', 'true');
+            $('#city_self').attr('data-parsley-required', 'true');
+            $('#pobox_self').attr('data-parsley-required', 'true');
+            $('#country_self').attr('data-parsley-required', 'true');
+            $('#terms').attr('data-parsley-required', 'true');
+
+            //reinitialize parsley
+            $('#course_register').parsley();
+
+
+        }
+
+    });
+
+
+
+
+    $("#search-smallbtn").click(function () {
+        $(".inside-search").slideToggle(0);
+    });
+
+    $("#search-smallbtn-searchresult").click(function () {
+        $(".search-results-inside-search").slideToggle(0);
+    });
+
+
+    /*For the left side menu stick - vish*/
+    $(document).ready(function () {
+
+        $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        /*Model Popup Starts Here*/
+        $("div[id^='myModal']").each(function () {
+            var currentModal = $(this);
+
+            //click next
+            currentModal.find('.btn-next').click(function () {
+                currentModal.modal('hide');
+                currentModal.closest("div[id^='myModal']").nextAll("div[id^='myModal']").first().modal('show');
+            });
+
+            //click prev
+            currentModal.find('.btn-prev').click(function () {
+                currentModal.modal('hide');
+                currentModal.closest("div[id^='myModal']").prevAll("div[id^='myModal']").first().modal('show');
+            });
+
+        });
+        /*Model PopupEnds*/
+
+
+
+
+
+        // Disable scroll zooming and bind back the click event
+        var onMapMouseleaveHandler = function (event) {
+            var that = $(this);
+
+            that.on('click', onMapClickHandler);
+            that.off('mouseleave', onMapMouseleaveHandler);
+            that.find('iframe').css("pointer-events", "none");
+        }
+
+        var onMapClickHandler = function (event) {
+            var that = $(this);
+
+            // Disable the click handler until the user leaves the map area
+            that.off('click', onMapClickHandler);
+
+            // Enable scrolling zoom
+            that.find('iframe').css("pointer-events", "auto");
+
+            // Handle the mouse leave event
+            that.on('mouseleave', onMapMouseleaveHandler);
+        }
+
+        // Enable map zooming with mouse scroll when the user clicks the map
+        $('.maps').on('click', onMapClickHandler);
+
+
+        // Association Inner slider
+        $('#owl-associations').owlCarousel({
+            loop: true
+            , margin: 30
+            , nav: false
+            , dots: true
+            , autoplay: true
+            , autoplayTimeout: 3000
+            , autoplayHoverPause: true
+            , responsive: {
+                0: {
+                    items: 1
+                }
+                , 600: {
+                    items: 3
+                }
+                , 1000: {
+                    items: 4
+                }
+            }
+        });
+        // City Inner slider
+        $('#owl-innercities').owlCarousel({
+            loop: true
+            , margin: 10
+            , nav: false
+            , dots: true
+            , autoplay: true
+            , autoplayTimeout: 3000
+            , autoplayHoverPause: true
+            , responsive: {
+                0: {
+                    items: 1
+                }
+                , 600: {
+                    items: 3
+                }
+                , 1000: {
+                    items: 4
+                }
+            }
+        });
+
+    });
+
+    $('#myModal-searchquickenquiry').on('hidden.bs.modal', function (e) {
+        $(this).find("input,textarea,select").val('').end();
+$('#form_enquiry').show();
+       // $('#enquiry_message').val('');
+        $('#enquiry_message').hide();
+        $('#db_message').hide();
+    });
+$('#myModal-searchdownloadbrochure').on('hidden.bs.modal', function (e) {
+        $(this).find("input,textarea,select").val('').end();
+        $('#form_db').show();
+        $('#db_message').hide();
+    });
+    
+/*--------------------------- Start Client Page ------------------------*/
+
+
+
+/*--------------------------- End Client Page ------------------------*/
+
+/*--------------------------- Start Register Page Toggle------------------------*/
+
+$(document).ready(function(){
+    $(".toolstoggle").hover(function(){
+      $(".tools").toggle();
+    });
+});
+
+/*--------------------------- End Register Page Toggle ------------------------*/
+
+</script>
+<script src="{% static 'js/rocket-loader.min.js' %}" data-cf-settings="84edf76b9c3dea873220205d-|49" defer=""></script></main>
 
 
 {% endblock %}

@@ -19,7 +19,7 @@
             
             <div class="container">
               <div class="row content">
-                <div class="carousel-content col-lg-8 offset-lg-100 bg-black-50 text-center pt48 pb40 t_all_text">
+                <div class="carousel-content col-lg-8 offset-lg-2 bg-black-50 text-center pt48 pb40 t_all_text">
                   <h2 class="t_slider_title text-white">
                     <span style="caret-color: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;, serif; font-size: 48px; font-weight: 600; text-align: left; text-transform: uppercase;" class="text-epsilon">INSPECTION</span>
                     <span style="caret-color: rgb(31, 150, 210); color: rgb(31, 150, 210); font-family: &quot;Roboto Slab&quot;, serif; font-size: 32px; font-weight: 600; text-align: left; text-transform: uppercase;">&nbsp;</span>
@@ -35,7 +35,7 @@
           <div class="carousel-item pt184 pb248 bg-beta oe_img_bg oe_custom_bg active" style="background-image: url(static/images/firefighting.jpg);" data-name="Slide">
             <div class="container">
               <div class="row content">
-                <div class="carousel-content col-lg-8 offset-lg-200 bg-black-50 text-center pt48 pb40 t_all_text">
+                <div class="carousel-content col-lg-8 offset-lg-2 bg-black-50 text-center pt48 pb40 t_all_text">
                   <h2 class="t_slider_title text-white">
                     <span style="caret-color: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;, serif; font-size: 48px; font-weight: 600; text-align: left; text-transform: uppercase;" class="text-epsilon">OPERATION&nbsp;</span>
                     <span style="caret-color: rgb(31, 150, 210); color: rgb(31, 150, 210); font-family: &quot;Roboto Slab&quot;, serif; font-size: 48px; font-weight: 600; text-align: left; text-transform: uppercase;">FIRE</span>
@@ -137,19 +137,17 @@
         </div>
     </div>
 </section>
-      <div class="input-group js_slider_snippet hidden" data-isemipro="true" data-slider-id="7" data-date-time="Sun Aug 25 2019 14:50:56 GMT+0300 (+03)"></div>
       <div class="oe_structure"></div>
-      <div class="input-group js_slider_snippet hidden" data-isemipro="true" data-slider-id="3" data-date-time="Tue Aug 20 2019 22:29:33 GMT+0300 (+03)"></div>
-      <section class="py-5 t_space_style oe_custom_bg"> </section>
-      <div class="input-group js_slider_snippet hidden" data-isemipro="true" data-slider-id="4" data-date-time="Tue Aug 20 2019 22:32:15 GMT+0300 (+03)"></div>
-      <section class="oe_custom_bg">
+      <section class="t_space_style "> </section>
+
+      <section class="oe_custom_bg ">
         <div class="container">
           <div class="row s_nb_column_fixed">
             <div class="col-lg-12 s_title" style="text-align: center;">
               <h2 class="text-uppercase title" style="line-height: 1; margin-bottom: 10px; position: relative;">
                 <div style="text-align: left;">
                   <font color="#333333" face="Roboto Slab, serif" style="font-size: 1.75rem;">
-                    <span style="font-size: 2rem; font-weight: 600;">up coming&nbsp;</span>
+                    <span style="font-size: 2rem; font-weight: 600;">Special&nbsp;</span>
                   </font>
                   <span class="text-theme-colored2" style="font-family: &quot;Roboto Slab&quot;, serif; font-size: 2rem; font-weight: 600; color: rgb(31, 150, 210) !important;">courses</span>
                 </div>
@@ -166,23 +164,26 @@
         <section id="upcoming-section" class="upcoming-section section-color-white section-padding">
 <div class="container">
 <div class="row home-upcoming-wrapper">
-<div class="col-md-12">
-<div class="clearfix m-b-12"></div>
-<p class="main-paragraph home-upcoming-description">Meirc‘s dynamic schedule is constantly reviewed and updated to ensure that every category is being addressed at least once a month, if not once every week. Please check the training courses listed below and if you do not find the subject you are interested in, email us or give us a call and we will do our best to assist. </p>
-<div class="clearfix m-b-12"></div>
-</div>
 
 <div class="col-md-12 trainingcourse-list-wrapper">
 
- {% for course in courses %}
+ {% for course in special_courses %}
   <div class="trainingcourse-list-column col-md-2 col-sm-4 col-xs-6">
   <div class="box-list">
   <div class="col-md-12 trainingcourse-list-image">
   <a href="{{course.get_absolute_url}}">
-  <img src="{{course.course_icon.url}}" class="img-responsive lazy" alt="{{course.title}}" style="display: block;">
-  </a>
+  <!-- <img src="{{course.course_icon.url}}" class="img-responsive lazy" alt="{{course.title}}" style="display: block;">
+  -->
+  <img src="{% static 'images/defaultcourseimg.jpg' %}" class="img-responsive lazy" alt="{{course.title}}" style="display: block;">
+
+</a>
   </div>
   <div class="col-md-12 trainingcourse-list-details-wrap">
+    <div class="col-md-12 trainingcourse-list-name"">
+      <a href="{{course.get_absolute_url}}">
+    <button type="submit" class="btn btn-default" id="courseoutline-btn">View Course</button>
+      </a>
+  </div> 
   <div class="col-md-12 trainingcourse-list-name">
   <a href="{{course.get_absolute_url}}">
   {{ course.title }} </a>
@@ -224,36 +225,122 @@
   </div>
   </div>
   <div class="clearfix p-b-8"></div>
-  <div class="col-md-12 no-padding">
-    <a href="{{course.get_absolute_url}}">
-  <button type="submit" class="btn btn-default" id="courseoutline-btn">View Course</button>
-    </a>
-</div> 
+  
 </div>
   </div>
 {% endfor %}
 
-<div class="clearfix m-b-24"></div>
-<div class="col-md-12 col-sm-12 text-center">
-<a href="https://www.meirc.com/training-courses" class="btn btn btn-info text-center" id="more-btn">More Courses</a>
-</div>
+
 <div class="clearfix m-b-12"></div>
 </div>
 </div>
 </div>
 </section>
       </section>
+      <section class="t_space_style oe_custom_bg"> </section>
+      <div class="input-group js_slider_snippet hidden" data-isemipro="true" data-slider-id="4" data-date-time="Tue Aug 20 2019 22:32:15 GMT+0300 (+03)"></div>
       <section class="oe_custom_bg">
         <div class="container">
           <div class="row s_nb_column_fixed">
             <div class="col-lg-12 s_title" style="text-align: center;">
-              <div class="s_hr text-left pb32 pt8">
-                <hr class="s_hr_4px border-alpha"/>
-              </div>
+              <h2 class="text-uppercase title" style="line-height: 1; margin-bottom: 10px; position: relative;">
+                <div style="text-align: left;">
+                  <font color="#333333" face="Roboto Slab, serif" style="font-size: 1.75rem;">
+                    <span style="font-size: 2rem; font-weight: 600;">up coming&nbsp;</span>
+                  </font>
+                  <span class="text-theme-colored2" style="font-family: &quot;Roboto Slab&quot;, serif; font-size: 2rem; font-weight: 600; color: rgb(31, 150, 210) !important;">courses</span>
+                </div>
+                <div style="text-align: left;">
+                  <span style="font-size: 12px;" class="text-beta">View all courses</span>
+                  <div class="s_hr text-left pb32 pt8">
+                    <hr class="border-600 s_hr_solid w-25 mr-auto s_hr_4px border-alpha"/>
+                  </div>
+                </div>
+              </h2>
             </div>
           </div>
         </div>
+        <section id="upcoming-section" class="upcoming-section section-color-white section-padding">
+<div class="container">
+<div class="row home-upcoming-wrapper">
+
+
+<div class="col-md-12 trainingcourse-list-wrapper">
+
+ {% for course in upcoming_courses %}
+  <div class="trainingcourse-list-column col-md-2 col-sm-4 col-xs-6">
+  <div class="box-list">
+  <div class="col-md-12 trainingcourse-list-image">
+  <a href="{{course.get_absolute_url}}">
+  <!-- <img src="{{course.course_icon.url}}" class="img-responsive lazy" alt="{{course.title}}" style="display: block;">
+  -->
+  <img src="{% static 'images/defaultcourseimg.jpg' %}" class="img-responsive lazy" alt="{{course.title}}" style="display: block;">
+
+  </a>
+  </div>
+  <div class="col-md-12 trainingcourse-list-details-wrap">
+    <div class="col-md-12 trainingcourse-list-name"">
+      <a href="{{course.get_absolute_url}}">
+    <button type="submit" class="btn btn-default" id="courseoutline-btn">View Course</button>
+      </a>
+  </div> 
+  <div class="col-md-12 trainingcourse-list-name">
+  <a href="{{course.get_absolute_url}}">
+  {{ course.title }} </a>
+  </div>
+  <div class="col-md-12 trainingcourse-list-td">
+  <table>
+  <tbody><tr>
+  <td width="24"><i class="fas fa-calendar-alt" ></i></td>
+  <td>
+  <a href="{{course.get_absolute_url}}">
+  19 - 23 Jan, 2020 </a>
+  </td>
+  </tr>
+  </tbody></table>
+  </div>
+  <div class="col-md-12 trainingcourse-list-td">
+  <table>
+  <tbody><tr>
+  <td width="24"><i class="fas fa-flag-checkered" ></i></td>
+  <td>
+  <a href="https://www.meirc.com/training-courses/planning-strategy-management/developing-lmplementing-business-plan">
+  Arabic
+  </a>
+  </td>
+  </tr>
+  </tbody></table>
+  </div>
+  <div class="col-md-12 trainingcourse-list-td">
+  <table>
+  <tbody><tr>
+  <td width="24"><i class="fas fa-map-marker map-color" ></i></td>
+  <td>
+  <a href="https://www.meirc.com/training-courses/planning-strategy-management/developing-lmplementing-business-plan">
+  Dubai<div class="clearfix"></div><span class="mutamayez-logo"></span>
+  </a>
+  </td>
+  </tr>
+  </tbody></table>
+  </div>
+  </div>
+  <div class="clearfix p-b-8"></div>
+ 
+</div>
+  </div>
+{% endfor %}
+
+
+<div class="clearfix m-b-12"></div>
+</div>
+</div>
+</div>
+</section>
+
+
       </section>
+      <section class="t_space_style "> </section>
+      
       <div class="input-group js_slider_snippet hidden" data-isemipro="true" data-slider-id="8" data-date-time="Fri Aug 30 2019 20:31:30 GMT+0300 (+03)"></div>
       <section class="oe_custom_bg">
         <div class="container">
@@ -278,646 +365,10 @@
         </div>
       </section>
    <div class="input-group js_slider_snippet hidden" data-isemipro="true" data-date-time="Tue Aug 20 2019 21:02:20 GMT+0300 (+03)"></div>
-      <section class="s_tabs aos-init none oe_custom_bg" data-aos="none">
-        <div class="container">
-          <div class="row s_col_no_bgcolor t_tabs_design fade-down aos-init" data-aos="fade-down">
-            <div class="col-lg-12 none aos-init" data-aos="none">
-              <div class="card bg-100">
-               
-                  <!--
-                <div class="card-header">
-                  <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                    <li class="nav-item">
-                      <a class="nav-link active show" id="nav_tabs_link_1567120786915_7" data-toggle="tab" href="#nav_tabs_content_1567120786915_7" role="tab" aria-controls="nav_tabs_content_1567120786915_7" aria-selected="true" data-original-title="" title="" aria-describedby="tooltip372735">All</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" id="nav_tabs_link_1567120786915_9" data-toggle="tab" href="#nav_tabs_content_1567120786915_9" role="tab" aria-controls="nav_tabs_content_1567120786915_9" aria-selected="false" data-original-title="" title="" aria-describedby="tooltip29907">Managerial</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link " id="nav_tabs_link_1567120786915_10" data-toggle="tab" href="#nav_tabs_content_1567120786915_10" role="tab" aria-controls="nav_tabs_content_1567120786915_10" aria-selected="false" data-original-title="" title="" aria-describedby="tooltip599663">technical</a>
-                    </li>
-                  </ul>
-                   </div>
-                -->
-               
-                <div class="card-body tab-content">
-                  <div class="tab-pane fade active show" id="nav_tabs_content_1567120786915_7" role="tabpanel" aria-labelledby="nav_tabs_link_1567120786915_7">
-                    <section class="s_three_columns aos-init fade-up-left oe_custom_bg" data-aos="fade-up-left">
-                      <div class="container">
-                        <div class="row d-flex aos-init align-items-stretch" data-aos="align-items-stretch">
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <a href="#nav_tabs_content_1566564911295_153" data-original-title="" title="" aria-describedby="tooltip833260">
-                                  <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Health,%20Safety%20and.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip556230" style="width: 50%;"/>
-                                </a>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">health  safety training programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
+      
+   {% include 'category.htm' %}
 
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Health,%20Safety%20and.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip22710" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">fire fighting training programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
 
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Security%20Management%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">security management programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <a href="/" data-original-title="" title="" aria-describedby="tooltip833260">
-                                  <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Quality%20and%20Productivity%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip556230" style="width: 50%;"/>
-                                </a>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">quality &amp; productivity programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Procurement%20and.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip22710" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">environmental management programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Digital%20Innovation%20and%20Transformation%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">artificial intelligence programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Electrical%20and%20Power%20eng.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">electrical, instrumentations, control &amp; power</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Mechanical.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">mechanical, maintenance &amp; utility</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Engineering%20and%20Instrumentation%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">civil, architect &amp; project management</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Chemical.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">chemical, process engineering &amp; wastewater treatement</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Oil%20and%20Gas%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">petroleum engineering &amp; subsurface production operation</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Oil%20and%20Gas%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">renewable energy engineering programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Marine.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">offshore engineering &amp; marine programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Analytical%20Laboratory.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">analytical laboratory, analyzers, R&amp;D and R&amp;T engineering</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Construction%20Management%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">military management &amp; defence programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Aviation%20Programs.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">aviation programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row d-flex aos-init align-items-stretch" data-aos="align-items-stretch">
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <a href="#nav_tabs_content_1566564911295_153" data-original-title="" title="" aria-describedby="tooltip833260">
-                                  <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Human%20Resources%20and%20Training%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip556230" style="width: 50%;"/>
-                                </a>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">Hrm &amp; Training Development programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Finance,%20accounting.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip22710" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">finance, accounting &amp; budgeting</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Banking,%20Insurance%20and.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">banking sector programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <a href="/" data-original-title="" title="" aria-describedby="tooltip833260">
-                                  <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Business%20Management.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip556230" style="width: 50%;"/>
-                                </a>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">business management, secreterial &amp; leadership</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Healthcare%20and.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip22710" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">healthcare management programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Marketing%20and%20Sales%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">sales &amp; marketing programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Procurement%20and-2.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">purchasing, supply chain, transport &amp; international logistics</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                  <!--
-                  <div class="tab-pane fade" id="nav_tabs_content_1567120786915_9" role="tabpanel" aria-labelledby="nav_tabs_link_1567120786915_9">
-                    <section class="s_three_columns aos-init fade-up-left oe_custom_bg" data-aos="fade-up-left">
-                      <div class="container">
-                        <div class="row d-flex aos-init align-items-stretch" data-aos="align-items-stretch">
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <a href="#nav_tabs_content_1566564911295_153" data-original-title="" title="" aria-describedby="tooltip833260">
-                                  <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Human%20Resources%20and%20Training%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip556230" style="width: 50%;"/>
-                                </a>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">Hrm &amp; Training Development programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Finance,%20accounting.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip22710" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">finance, accounting &amp; budgeting</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Banking,%20Insurance%20and.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">banking sector programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <a href="/" data-original-title="" title="" aria-describedby="tooltip833260">
-                                  <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Business%20Management.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip556230" style="width: 50%;"/>
-                                </a>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">business management, secreterial &amp; leadership</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Healthcare%20and.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip22710" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">healthcare management programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Marketing%20and%20Sales%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">sales &amp; marketing programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Procurement%20and-2.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">purchasing, supply chain, transport &amp; international logistics</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                  <div class="tab-pane fade " id="nav_tabs_content_1567120786915_10" role="tabpanel" aria-labelledby="nav_tabs_link_1567120786915_10">
-                    <section class="s_three_columns aos-init fade-up-left oe_custom_bg" data-aos="fade-up-left">
-                      <div class="container">
-                        <div class="row d-flex aos-init align-items-stretch" data-aos="align-items-stretch">
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <a href="#nav_tabs_content_1566564911295_153" data-original-title="" title="" aria-describedby="tooltip833260">
-                                  <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Health,%20Safety%20and.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip556230" style="width: 50%;"/>
-                                </a>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">health &amp; safety training programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Civil%20&amp;%20Architect%20eng.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip22710" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">fire fighting training programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Security%20Management%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">security management programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <a href="/" data-original-title="" title="" aria-describedby="tooltip833260">
-                                  <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Quality%20and%20Productivity%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip556230" style="width: 50%;"/>
-                                </a>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">quality &amp; productivity programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Procurement%20and.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip22710" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">environmental management programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Digital%20Innovation%20and%20Transformation%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">artificial intelligence programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Electrical%20and%20Power%20eng.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">electrical, instrumentations, control &amp; power</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Mechanical%20&amp;%20Utility.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">mechanical, maintenance &amp; utility</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Engineering%20and%20Instrumentation%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">civil, architect &amp; project management</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Chemical.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">chemical, process engineering &amp; wastewater treatement</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Oil%20and%20Gas%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">petroleum engineering &amp; subsurface production operation</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Oil%20and%20Gas%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">renewable energy engineering programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Oil%20and%20Gas%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">offshore engineering &amp; marine programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Analytical%20Laboratory.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">analytical laboratory, analyzers, R&amp;D and R&amp;T engineering</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Construction%20Management%C2%A0.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">military management &amp; defence programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 s_col_no_bgcolor ts_img_hvr col-lg-3">
-                            <div>
-                              <div class="t_img_hover_overflow" style="background-color:transparent;">
-                                <img class="card-img-top img img-responsive feature_image zoom_image" src="{% static 'images\Aviation%20Programs.png' %}" alt="Odoo - Sample 3 for three columns" data-original-title="" title="" aria-describedby="tooltip11264" style="width: 50%;"/>
-                              </div>
-                              <div class="card-body">
-                                <p class="card-title te_3_column_center_heading three_columns_heading">
-                                  <font style="font-size: 12px;">aviation programs</font>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </section>
-                    <p>
-                      <b>
-                        <br/>
-                      </b>
-                    </p>
-                  </div>
-                  <div class="tab-pane fade " id="nav_tabs_content_1566564911295_154" role="tabpanel" aria-labelledby="nav_tabs_link_1566564911295_154">
-                    <h3>&nbsp;</h3>
-                    <h3>
-                      <br/>
-                    </h3>
-                  </div>
-                -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
       <!--<section class="py-5 t_space_style"> </section>-->
       <!--<section class="s_numbers pt24 pb24 bg-100 oe_custom_bg" style="">
         <div class="container">
@@ -1117,37 +568,36 @@
           </div>
         </div>
       </section>
-      <section id="myCarousel1566318526648" data-type="multi" class="container carousel carousel-showmanymoveone common_carousel_emp aos-init slide" data-ride="carousel" data-interval="10000" data-aos="slide">
+      <!-- <section id="myCarousel1566610604358" data-type="multi" class="container carousel carousel-showmanymoveone common_carousel_emp aos-init slide aos-animate" data-ride="carousel" data-interval="10000" data-aos="slide" style="height:200px">
+      -->
+      <section id="myCarousel1566318526648" data-type="multi" class="container carousel carousel-showmanymoveone common_carousel_emp aos-init slide" data-ride="carousel" data-interval="10000" data-aos="slide" style="height:350px">
         <div class="carousel-inner row mx-auto team_3_row">
-          <section class="carousel-item col-sm-6 col-md-6 col-lg-3" style="">
+          {% for item in aurthor %}
+          {% if item.display == True %}
+          <section id='setactive' class="carousel-item col-sm-6 col-md-6 col-lg-3" style="">
             <div class="row s_col_no_resize s_col_no_bgcolor">
               <div class="t_team_img">
                 <div class="col-lg-12 t_image_hidden">
                   <div class="t_img_hover_overflow">
-                    <img alt="Company team" src="{% static 'images\In3.png' %}" class="img-fluid d-block mx-auto" data-original-title="" title="" aria-describedby="tooltip635762"/>
+                    <img alt="Company team" src="{{ item.profile_picture.url }}" class="img-fluid d-block mx-auto" data-original-title="" title="" aria-describedby="tooltip635762"/>
                   </div>
                 </div>
                 <section class="text-center t_team_3_design">
-                  <p class="employee_name mt16 o_default_snippet_text">Lorem ipsum</p>
-                  <p class="text-muted employee_job_title mt8 o_default_snippet_text"> Lorem </p>
+                  <p class="employee_name mt16 o_default_snippet_text">{{item.name}}</p>
+                  <p class="text-muted employee_job_title mt8 o_default_snippet_text"> {{item.role}} </p>
                   <section class="col-lg-12 t_social_icon_3 text-center">
                     <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_facebook">
+                      <a href='{{item.facebook}}' class="btn t_team_3_facebook">
                         <i class="fab fa-facebook-f"></i>
                       </a>
                     </section>
                     <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_twitter">
+                      <a href='{{item.twitter}}' class="btn t_team_3_twitter">
                         <i class="fab fa-twitter"></i>
                       </a>
                     </section>
                     <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_google-plus">
-                        <i class="fab fa-google-plus"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_linkedin">
+                      <a href='{{item.linkedin}}' class="btn t_team_3_linkedin">
                         <i class="fab fa-linkedin"></i>
                       </a>
                     </section>
@@ -1156,191 +606,9 @@
               </div>
             </div>
           </section>
-          <section class="carousel-item col-sm-6 col-md-6 col-lg-3" style="">
-            <div class="row s_col_no_resize s_col_no_bgcolor">
-              <div class="t_team_img">
-                <div class="col-lg-12 t_image_hidden t_img_responsive">
-                  <div class="t_img_hover_overflow">
-                    <img alt="Company team" src="{% static 'images\In4.png' %}" class="img-fluid d-block mx-auto" data-original-title="" title="" aria-describedby="tooltip8935"/>
-                  </div>
-                </div>
-                <section class="text-center t_team_3_design">
-                  <p class="employee_name mt16 o_default_snippet_text">Lorem ipsum</p>
-                  <p class="text-muted employee_job_title mt8 o_default_snippet_text"> Lorem </p>
-                  <section class="col-lg-12 t_social_icon_3 text-center">
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_facebook">
-                        <i class="fab fa-facebook-f"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_twitter">
-                        <i class="fab fa-twitter"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_google-plus">
-                        <i class="fab fa-google-plus"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_linkedin">
-                        <i class="fab fa-linkedin"></i>
-                      </a>
-                    </section>
-                  </section>
-                </section>
-              </div>
-            </div>
-          </section>
-          <section class="carousel-item col-sm-6 col-md-6 col-lg-3 active" style="">
-            <div class="row s_col_no_resize s_col_no_bgcolor">
-              <div class="t_team_img">
-                <div class="col-lg-12 t_image_hidden t_img_responsive">
-                  <div class="t_img_hover_overflow">
-                    <img alt="Company team" src="{% static 'images\In5.png' %}" class="img-fluid d-block mx-auto" data-original-title="" title="" aria-describedby="tooltip414400"/>
-                  </div>
-                </div>
-                <section class="text-center t_team_3_design">
-                  <p class="employee_name mt16 o_default_snippet_text">Lorem ipsum</p>
-                  <p class="text-muted employee_job_title mt8 o_default_snippet_text"> Lorem </p>
-                  <section class="col-lg-12 t_social_icon_3 text-center">
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_facebook">
-                        <i class="fab fa-facebook-f"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_twitter">
-                        <i class="fab fa-twitter"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_google-plus">
-                        <i class="fab fa-google-plus"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_linkedin">
-                        <i class="fab fa-linkedin"></i>
-                      </a>
-                    </section>
-                  </section>
-                </section>
-              </div>
-            </div>
-          </section>
-          <section class="carousel-item col-sm-6 col-md-6 col-lg-3" style="">
-            <div class="row s_col_no_resize s_col_no_bgcolor">
-              <div class="t_team_img">
-                <div class="col-lg-12 t_image_hidden">
-                  <div class="t_img_hover_overflow">
-                    <img alt="Company team" src="{% static 'images\In1.png' %}" class="img-fluid d-block mx-auto"/>
-                  </div>
-                </div>
-                <section class="text-center t_team_3_design">
-                  <p class="employee_name mt16 o_default_snippet_text">Lorem ipsum</p>
-                  <p class="text-muted employee_job_title mt8 o_default_snippet_text"> Lorem </p>
-                  <section class="col-lg-12 t_social_icon_3 text-center">
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_facebook">
-                        <i class="fab fa-facebook-f"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_twitter">
-                        <i class="fab fa-twitter"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_google-plus">
-                        <i class="fab fa-google-plus"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_linkedin">
-                        <i class="fab fa-linkedin"></i>
-                      </a>
-                    </section>
-                  </section>
-                </section>
-              </div>
-            </div>
-          </section>
-          <section class="carousel-item col-sm-6 col-md-6 col-lg-3" style="">
-            <div class="row s_col_no_resize s_col_no_bgcolor">
-              <div class="t_team_img">
-                <div class="col-lg-12 t_image_hidden">
-                  <div class="t_img_hover_overflow">
-                    <img alt="Company team" src="{% static 'images\In6.png' %}" class="img-fluid d-block mx-auto"/>
-                  </div>
-                </div>
-                <section class="text-center t_team_3_design">
-                  <p class="employee_name mt16 o_default_snippet_text">Lorem ipsum</p>
-                  <p class="text-muted employee_job_title mt8 o_default_snippet_text"> Lorem </p>
-                  <section class="col-lg-12 t_social_icon_3 text-center">
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_facebook">
-                        <i class="fab fa-facebook-f"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_twitter">
-                        <i class="fab fa-twitter"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_google-plus">
-                        <i class="fab fa-google-plus"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_linkedin">
-                        <i class="fab fa-linkedin"></i>
-                      </a>
-                    </section>
-                  </section>
-                </section>
-              </div>
-            </div>
-          </section>
-          <section class="carousel-item col-sm-6 col-md-6 col-lg-3 oe_custom_bg" style="">
-            <div class="row s_col_no_resize s_col_no_bgcolor">
-              <div class="t_team_img">
-                <div class="col-lg-12 t_image_hidden">
-                  <div class="t_img_hover_overflow">
-                    <img alt="Company team" src="{% static 'images\In2.png' %}" class="img-fluid d-block mx-auto" data-original-title="" title="" aria-describedby="tooltip889823"/>
-                  </div>
-                </div>
-                <section class="text-center t_team_3_design">
-                  <p class="employee_name mt16 o_default_snippet_text">Lorem ipsum</p>
-                  <p class="text-muted employee_job_title mt8 o_default_snippet_text"> Lorem </p>
-                  <section class="col-lg-12 t_social_icon_3 text-center">
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_facebook">
-                        <i class="fab fa-facebook-f"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_twitter">
-                        <i class="fab fa-twitter"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_google-plus">
-                        <i class="fab fa-google-plus"></i>
-                      </a>
-                    </section>
-                    <section class="t_social_icon_inline">
-                      <a class="btn t_team_3_linkedin">
-                        <i class="fab fa-linkedin"></i>
-                      </a>
-                    </section>
-                  </section>
-                </section>
-              </div>
-            </div>
-          </section>
+          {% endif %}
+         {% endfor %}
+          
         </div>
         <a class="carousel-control-prev abc" role="button" data-slide="prev" data-target="#myCarousel1566318526648">
           <i class="fas fa-chevron-left fa-lg text-muted" data-original-title="" title="" aria-describedby="tooltip757927"></i>
@@ -1349,7 +617,7 @@
           <i class="fas fa-chevron-right fa-lg text-muted" data-original-title="" title="" aria-describedby="tooltip216879"></i>
         </a>
       </section>
-      <section class="py-5 t_space_style"> </section>
+     
       
       <!--<div id="myCarousel1566326691882" class="s_carousel carousel slide s_carousel_default aos-init" data-interval="10000" data-aos="s_carousel_default">
         <ol class="carousel-indicators d-none">
@@ -1676,5 +944,11 @@
   
                 
 			<div class="mask_cover" data-oe-id="1843" data-oe-xpath="/data/xpath/div" data-oe-model="ir.ui.view" data-oe-field="arch"></div>
-		</main>
+    </main>
+    <script>
+      var element = document.getElementById("setactive");
+      element.classList.add("active");
+
+      console.log(element)
+    </script>
 {% endblock %}

@@ -3,7 +3,20 @@
 
 {% block main %}
 <main>
-<H1>Request inhouse proposal</H1>
+  <section id="inhouseproposalpage-section" class="inhouseproposalpage-section section-color-white section-padding border-gray insidehead-padding-10">
+    <div class="container">
+    <div class="row">
+    <div class="col-md-12">
+    <h1 class="first-head">Request an In-House Proposal</h1>
+    </div>
+    </div>
+    </div>
+    </section>
+
+  <section id="insidehead-section" class="insidehead-section insidehead-padding">
+    <div class="row">
+    <div class="container">
+
 <form method="post" >
     {% csrf_token %}
  
@@ -596,20 +609,29 @@
                     </style>
     </div>
   </form>
+  <div class="col-md-3">
+    <div class="col-md-12 register-coursename">
+    Contact Us </div>
+    <div class="clearfix"></div>
+    <div class="search-inner-box">
+    <ul class="footer-list">
+    <li><i class="fa fa-map-marker" aria-hidden="true"></i>  Pure visions health & saftey training and consultancy center.
+      3269 King Abdullah Branch Rd </li>
+    <li>
+    <br>
+    </li>
+    <li><i class="fa fa-phone" aria-hidden="true"></i> <b>800 7100 </b></li>
+    <li><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp; +971 0 000 0000 </li>
+    <li><i class="fa fa-fax" aria-hidden="true"></i>&nbsp;&nbsp; +971 0 000 0000 </li>
+    <li><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;&nbsp; <a href="info@pure-visions.com">info@pure-visions.com</a></li>
+    </ul>
+    </div>
+    
+    </div>
+
+    </div>
+    </div>
+    </section>
 </main>
+{% endblock %}
 
-
-<!--
-  {% endblock %}
-
-  <input type="text"
-       name="{{ form.name.name }}"
-       id="{{ form.name.id_for_label }}"
-       {% if form.name.value != None %}value="{{ form.name.value|stringformat:'s' }}"{% endif %}
-       maxlength="{{ form.name.field.max_length }}"
-       {% if form.name.field.required %}required{% endif %}>
-
-       {{ form.email.label_tag }}</th>
-        <td>
-          {{ form.email.errors }}
-        -->

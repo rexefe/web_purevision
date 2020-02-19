@@ -7,13 +7,13 @@ COURSE_TYPE = [
     ('tech', 'Technical'),
     ('mangt', 'Managerial'),
    ]
-
+EVENT = [('Upcoming', 'Upcoming'), ('Special', 'Special')]
 
 class Course(models.Model):
 	title = models.CharField(max_length=100)
 	code = models.CharField(max_length=10, default='PRO101')
 	course_full_img = models.ImageField(upload_to='images/', default='/images/defualtbanner.PNG')
-	course_icon = models.ImageField(upload_to='images/', default='/images/defaultsimage.png')
+	course_icon = models.ImageField(upload_to='images/', default='/images/defaultcourseimg.jpg')
 	label = models.CharField(max_length=20, default='Physical Event')
 	category = models.ForeignKey('Category', on_delete=models.CASCADE)
 	base_language = models.CharField(max_length=20, default='English')
@@ -26,6 +26,7 @@ class Course(models.Model):
 	date = models.DateField(null=True)
 	outline = models.TextField()
 	duration = models.IntegerField(default=5, verbose_name='Durations in Days')
+	event = models.CharField(choices=EVENT , max_length=20, default='Upcoming')
 
 	
 	def __str__(self):

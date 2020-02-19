@@ -204,13 +204,23 @@
 <ul class="left-menu">
 
 
-{% for category in categories %}
-	<li class="">
-	<a href="{{ category.get_absolute_url }}">
-	<div class="left-menu-icon"><img src="{{ category.icon.url}}" alt="" /></div>
-	<div class="left-menu-text">{{ category.name }}</div>
-	</a>
-	</li>
+{% for item in categories %}
+    {% if category.name == item.name %}
+        <li class="active">
+        <a href="{{ item.get_absolute_url }}">
+        <div class="left-menu-icon"><img src="{{ item.icon.url}}" alt="" /></div>
+        <div class="left-menu-text">{{ item.name }}</div>
+        </a>
+        </li>
+    {% else %}
+        <li>
+        <a href="{{ item.get_absolute_url }}">
+        <div class="left-menu-icon"><img src="{{ item.icon.url}}" alt="" /></div>
+        <div class="left-menu-text">{{ item.name }}</div>
+        </a>
+        </li>
+    {% endif %}
+
 {% endfor %}
 
 </ul>
@@ -239,12 +249,17 @@
 		<div class='box-list'>
 		<div class='col-md-12 trainingcourse-list-image'>
 		<a href="{{ course.get_absolute_url }}">
-		<img data-src="https://www.meirc.com/assets/images/course-image/course/accounting-finance-policies-procedures-courses.jpg" src="https://www.meirc.com/assets/images/course-image/course/default.jpg" class="img-responsive lazy" alt="">
-		<noscript><img src="https://www.meirc.com/assets/images/course-image/course/accounting-finance-policies-procedures-courses.jpg" alt="Accounting and Finance Policies and Procedures Courses" /></noscript>
+		<img src="{% static 'images/defaultcourseimg.jpg' %}" class="img-responsive lazy" alt="">
+		<noscript>
+        <img src="{% static 'images/defaultcourseimg.jpg' %}" alt="Accounting and Finance Policies and Procedures Courses" /></noscript>
 		</a>
 		</div>
 
 		<div class='col-md-12 trainingcourse-list-details-wrap category-list-wrap-height'>
+
+        <div class='col-md-12 trainingcourse-list-name'>
+            <a href="{{ course.get_absolute_url }}" class="btn btn-small btn-block btn-blue">Course Outline</a>
+        </div>
 		<div class='col-md-12 trainingcourse-list-name'>
 		<a href="{{ course.get_absolute_url }}">
 		{{ course.title }}</a>
@@ -267,9 +282,7 @@
 		</div>
 		</div>
 		<div class='clearfix p-b-8'></div>
-		<div class='col-md-12 single-course-sqarewraper-content-course-btn'>
-		<a href="{{ course.get_absolute_url }}" class="btn btn-small btn-block btn-blue">Course Outline</a>
-		</div>
+	
 		</div>
 		</div>
 

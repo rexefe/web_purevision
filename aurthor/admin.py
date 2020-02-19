@@ -6,6 +6,6 @@ from .models import *
 
 class AuthurAdmin(admin.ModelAdmin):
 
-	list_display = ('user_id','name')
+	list_display = ('name', 'role', 'display')
 
 admin.site.register(Authur, AuthurAdmin)

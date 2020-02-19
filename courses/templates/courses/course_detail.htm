@@ -14,12 +14,21 @@
 						<h2 class="leftmenu-head">Training Categories</h2>
 						<ul class="left-menu">
 							{% for category in categories %}
-							<li class="">
-								<a href="{{ category.get_absolute_url }}">
-									<div class="left-menu-icon"><img src="{{ category.icon.url}}" /></div>
-									<div class="left-menu-text">{{ category.name }}</div>
-								</a>
-							</li>
+							{% if category.name == object.category.name %}
+								<li class="active">
+									<a href="{{ category.get_absolute_url }}">
+										<div class="left-menu-icon"><img src="{{ category.icon.url}}" /></div>
+										<div class="left-menu-text">{{ category.name }}</div>
+									</a>
+								</li>
+							{% else %}
+								<li class="">
+									<a href="{{ category.get_absolute_url }}">
+										<div class="left-menu-icon"><img src="{{ category.icon.url}}" /></div>
+										<div class="left-menu-text">{{ category.name }}</div>
+									</a>
+								</li>
+							{% endif %}
 							{% endfor %}
 						</ul>
 
@@ -52,7 +61,6 @@
 											<div class="col-md-4 pull-right course-details-mobile-float-left">
 												<a href="https://www.meirc.com/training-courses/security-management/access-control-physical-security-management/printcourse" target="_blank" class="print-download-ico full-right"><i class="fa fa-print" ></i></a>
 												<a href="#" class="print-download-ico hide" title=""><i class="fa fa-envelope" ></i></a>
-												<img src="https://www.meirc.com/assets/images/plus-training-courses.png" alt="" width="64px" class="m-t-7 pull-right" />
 											</div>
 											<div class="clearfix"></div>
 										</div>
@@ -64,24 +72,22 @@
 
 										</div>
 										<div class="col-md-12 m-t-12 courseActions">
-											<form action="/request-in-house-proposal/" method="get" class="pull-left mobile-btn-width-register ">
+											<form action="/request-in-house-proposal/" method="get" class="pull-left mobile-btn-width-register">
 												<input type="hidden" name="course_id" value="{{ object.id }}" />
 												<input type="hidden" name="course_name" value="{{ object.title }}" />
 												<button type="submit" id="searresultscourses-btn2" class="btn btn-info btn-sm btn-small mobile-btn-width" style="margin-right:4px;">
 													Request an In-House Proposal </button>
 											</form>
 
-											<a href="#" class="btn btn-primary btn-sm btn-small mobile-btn-width" data-toggle="modal" data-target="#myModal-searchquickenquiry" data-id='549' data-plus='1' data-name='Access Control and Physical Security Management'> Quick Enquiry</a>
-											<!--<a href="#" class="btn btn-success btn-sm btn-small mobile-btn-width" data-toggle="modal" data-target="#myModal-searchdownloadbrochure" data-id='549' data-plus='1' data-name='Access Control and Physical Security Management' data-url="https://www.meirc.com/training-courses/security-management/access-control-physical-security-management/download">
+											<a href="#" class="btn btn-primary btn-sm btn-small mobile-btn-width" data-toggle="modal" data-target="#myModal-searchquickenquiry" data-id="68" data-plus="0" data-name="Certificate in Advanced Project Management"> Quick Enquiry</a>											<!--<a href="#" class="btn btn-success btn-sm btn-small mobile-btn-width" data-toggle="modal" data-target="#myModal-searchdownloadbrochure" data-id='549' data-plus='1' data-name='Access Control and Physical Security Management' data-url="https://www.meirc.com/training-courses/security-management/access-control-physical-security-management/download">
 --												Download Brochure</a> -->
 
 											<!--<a href="#" class="btn btn-danger btn-sm btn-small mobile-btn-width" id="searresultscourses-btn1" data-toggle="modal" data-target="#myModal-callmeback" data-id='549' data-plus='1' data-name='Access Control and Physical Security Management'>Call Me Back</a>
-											-->											
-											<!--
-												<a href="https://www.meirc.com/training-courses/security-management/access-control-physical-security-management/printcourse" target="_blank" class="btn btn-success btn-sm btn-small mobile-btn-width hide" > Print</a>
 											-->
+												<a href="https://www.meirc.com/training-courses/security-management/access-control-physical-security-management/printcourse" target="_blank" class="btn btn-success btn-sm btn-small mobile-btn-width hide" > Print</a>
+										
 
-											<form action="/course/register" method="get" >
+											<form action="/course/register" method="get" class="pull-right mobile-btn-width-register">
 												<input type="hidden" name="q" value="4" />
 												<button type="submit" class="btn btn-info btn-sm btn-small btn pull-right mobile-btn-width" id="searresultscourses-btn2">Register Now </button>
 											</form>
@@ -99,20 +105,28 @@
 						<div class="col-md-12 box-list no-padding">
 							<div class="course-outlinetab">
 								<nav class="courseoutline-tab">
+									<div class="tab">
 									<ul>
-										<li><a href="#" class="overview-tab active menuLinks" data-target="course_detail_print">Overview</a></li>
-										<li><a href="#" class="location-tab menuLinks" data-target="locationBox">Location & Date</a></li>
-										<li><a href="#" class="fees-tab menuLinks" data-target="locationBox">Fees</a></li>
-										<li><a href="#" class="ouline-tab menuLinks" data-target="outlineBox">Course Outline</a></li>
+										<li><a href="#" class="tablinks overview-tab menuLinks" onclick="openCity(event, 'Overview')" id="defaultOpen">Overview</a></li>
+										<li><a href="#" class="tablinks ouline-tab menuLinks" onclick="openCity(event, 'Outline')">Course Outline</a></li>
 									</ul>
+								</div>
+
 								</nav>
 								<div class="clearfix"></div>
 							</div>
 						</div>
 					</div>
-					<div id="course_detail_print" class="col-md-12 m-t-24">
-						<div class="col-md-12 box-list-two" id="overview-box">
-							<p>{{ object.overview }}</p>
+
+					<div id="Overview" class="tabcontent col-md-12 m-t-24 ">
+						<div class="col-md-12 box-list-two">
+							<p>{{ object.overview }} <strong>This is the Overview</strong></p>
+						</div>
+					</div>
+
+					<div id="Outline" class="tabcontent col-md-12 m-t-24">
+						<div class="col-md-12 box-list-two">
+							<p>{{object.outline}} <strong>This is the outline</strong></p>
 						</div>
 					</div>
 
@@ -253,12 +267,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-12 courseoutline-wrapper m-t-24" id="outlineBox">
-										<div class="col-md-12 courseoutline-boxes ouline-area box-list-two" id="ouline-box" data-anchor="ouline-box">
-											<h4>Course Outline</h4>
-											<p>{{ object.outline }}</p>
-										</div>
-									</div>
+								
 								</div>
 								</div>
 							</div>
@@ -285,6 +294,32 @@
 			</div>
 		</div>
 	</section>
+
+	<script>
+		document.getElementById("defaultOpen").click();
+
+		function openCity(evt, cityName) {
+		  // Declare all variables
+		  var i, tabcontent, tablinks;
+		
+		  // Get all elements with class="tabcontent" and hide them
+		  tabcontent = document.getElementsByClassName("tabcontent");
+		  for (i = 0; i < tabcontent.length; i++) {
+			tabcontent[i].style.display = "none";
+		  }
+		
+		  // Get all elements with class="tablinks" and remove the class "active"
+		  tablinks = document.getElementsByClassName("tablinks");
+		  for (i = 0; i < tablinks.length; i++) {
+			tablinks[i].className = tablinks[i].className.replace(" active", "");
+		  }
+		
+		  // Show the current tab, and add an "active" class to the button that opened the tab
+		  document.getElementById(cityName).style.display = "block";
+		  evt.currentTarget.className += " active";
+		  console.log( evt.currentTarget.className)
+		} 
+		</script>
 </main>
 
 
